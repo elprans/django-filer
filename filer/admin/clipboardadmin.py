@@ -29,7 +29,7 @@ class ClipboardAdmin(admin.ModelAdmin):
         from filer import views
         url_patterns = patterns('',
             url(r'^operations/paste_clipboard_to_folder/$',
-                self.admin_site.admin_view(views.paste_clipboard_to_folder),
+                views.paste_clipboard_to_folder,
                 name='filer-paste_clipboard_to_folder'),
             url(r'^operations/discard_clipboard/$',
                 self.admin_site.admin_view(views.discard_clipboard),
