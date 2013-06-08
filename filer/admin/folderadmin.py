@@ -194,10 +194,10 @@ class FolderAdmin(PrimitivePermissionAwareModelAdmin):
                 name='filer-directory_listing'),
 
             url(r'^(?P<folder_id>\d+)/make_folder/$',
-                self.admin_site.admin_view(views.make_folder),
+                views.make_folder,
                 name='filer-directory_listing-make_folder'),
             url(r'^make_folder/$',
-                self.admin_site.admin_view(views.make_folder),
+                views.make_folder,
                 name='filer-directory_listing-make_root_folder'),
 
             url(r'^images_with_missing_data/$',
