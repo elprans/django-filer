@@ -177,7 +177,18 @@ class FolderAdmin(PrimitivePermissionAwareModelAdmin):
             from django.conf.urls.defaults import patterns, url
         urls = super(FolderAdmin, self).get_urls()
         from filer import views
+
+        info = self.model._meta.app_label, self.model._meta.module_name
+
         url_patterns = patterns('',
+            url(r'^(.+)/delete/$',
+                self.delete_view,
+                name='%s_%s_delete' % info),
+
+            url(r'^(.+)/$',
+                self.change_view,
+                name='%s_%s_change' % info),
+
             # we override the default list view with our own directory listing
             # of the root directories
             url(r'^$',
@@ -190,7 +201,7 @@ class FolderAdmin(PrimitivePermissionAwareModelAdmin):
                 name='filer-directory_listing-last'),
 
             url(r'^(?P<folder_id>\d+)/list/$',
-                self.admin_site.admin_view(self.directory_listing),
+                self.directory_listing,
                 name='filer-directory_listing'),
 
             url(r'^(?P<folder_id>\d+)/make_folder/$',

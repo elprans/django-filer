@@ -133,4 +133,26 @@ class FileAdmin(PrimitivePermissionAwareModelAdmin):
             'delete': False,
         }
 
+    def get_urls(self):
+        try:
+            # django >=1.4
+            from django.conf.urls import patterns, url
+        except ImportError:
+            # django <1.4
+            from django.conf.urls.defaults import patterns, url
+        urls = super(FileAdmin, self).get_urls()
+
+        info = self.model._meta.app_label, self.model._meta.module_name
+
+        urlpatterns = patterns('',
+            url(r'^(.+)/delete/$',
+                self.delete_view,
+                name='%s_%s_delete' % info),
+            url(r'^(.+)/$',
+                self.change_view,
+                name='%s_%s_change' % info),
+        )
+        urlpatterns.extend(urls)
+        return urlpatterns
+
 FileAdmin.fieldsets = FileAdmin.build_fieldsets()
