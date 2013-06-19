@@ -185,7 +185,7 @@ class FolderAdmin(PrimitivePermissionAwareModelAdmin):
                 self.delete_view,
                 name='%s_%s_delete' % info),
 
-            url(r'^(.+)/$',
+            url(r'^(\d+)/$',
                 self.change_view,
                 name='%s_%s_change' % info),
 
